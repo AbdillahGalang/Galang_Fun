@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rajawali Woodworks — Kerajinan Kayu Handmade</title>
+<style>
+    :root {
+        --bg: #f7f5f2;
+        --text: #3b2f2f;
+        --subtext: #6f5d5d;
+        --card-bg: rgba(255,255,255,0.75);
+        --header-bg: #3b2f2f;
+        --header-text: #ffffff;
+        --accent: #a9753b;
+        --shadow: rgba(0,0,0,0.15);
+    }
+    body.dark {
+        --bg: #1c1b1a;
+        --text: #f8e6c8;
+        --subtext: #d3c0a5;
+        --card-bg: rgba(42,39,38,0.75);
+        --header-bg: #000000;
+        --header-text: #f8e6c8;
+        --accent: #d4a945;
+        --shadow: rgba(255,255,255,0.08);
+    }
+    body {
+        margin: 0;
+        font-family: "Poppins", sans-serif;
+        background: var(--bg);
+        color: var(--text);
+        transition: 0.4s;
+    }
+    header {
+        background: var(--header-bg);
+        color: var(--header-text);
+        padding: 20px 40px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        position: sticky;
+        top: 0;
+        z-index: 10;
+        transition: 0.3s;
+    }
+    header h1 { margin: 0; font-size: 26px; font-weight: 600; }
+    nav a { color: var(--header-text); text-decoration: none; margin-left: 22px; font-size: 15px; transition: 0.2s; }
+    nav a:hover { opacity: 0.7; }
+    .toggle-btn {
+        background: none;
+        border: 2px solid var(--header-text);
+        color: var(--header-text);
+        padding: 6px 12px;
+        border-radius: 6px;
+        cursor: pointer;
+        transition: 0.3s;
+        font-weight: 500;
+    }
+    .toggle-btn:hover { background: var(--header-text); color: var(--header-bg); }
+
+    /* HERO SLIDER */
+    .hero {
+        position: relative;
+        height: 60vh;
+        overflow: hidden;
+    }
+    .slides {
+        display: flex;
+        width: 300%;
+        height: 100%;
+        transition: transform 1s ease-in-out;
+    }
+    .slide {
+        width: 100%;
+        flex-shrink: 0;
+        background-size: cover;
+        background-position: center;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        color: white;
+        position: relative;
+    }
+    .slide::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: rgba(0,0,0,0.35);
+    }
+    .slide-content {
+        position: relative;
+        z-index: 1;
+        max-width: 700px;
+    }
+    .slide-content h2 {
+        font-size: 38px;
+        text-shadow: 0 4px 10px rgba(0,0,0,0.6);
+        margin-bottom: 20px;
+    }
+    .hero-btn {
+        padding: 12px 25px;
+        background: var(--accent);
+        color: #071013;
+        font-weight: 600;
+        border-radius: 8px;
+        text-decoration: none;
+        transition: 0.3s;
+    }
+    .hero-btn:hover { transform: scale(1.05); background: #c28a44; }
+
+    /* CONTAINER */
+    .container { padding: 60px 40px; }
+    .section-title { text-align: center; font-size: 30px; font-weight: 700; margin-bottom: 40px; }
+
+    /* FILTER */
+    .filter-btns { text-align: center; margin-bottom: 30px; }
+    .filter-btns button {
+        padding: 8px 18px;
+        margin: 0 6px;
+        border: 1px solid var(--accent);
+        background: transparent;
+        color: var(--text);
+        border-radius: 6px;
+        cursor: pointer;
+        transition: 0.3s;
+        font-weight: 500;
+    }
+    .filter-btns button.active, .filter-btns button:hover {
+        background: var(--accent);
+        color: #071013;
+    }
+
+    /* CARD GRID 2 columns */
+    .card-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 28px;
+    }
+    .card {
+        background: var(--card-bg);
+        backdrop-filter: blur(10px);
+        border-radius: 16px;
+        overflow: hidden;
+        box-shadow: 0 8px 25px var(--shadow);
+        transition: transform 0.4s, box-shadow 0.4s, opacity 0.6s;
+        opacity: 0;
+        transform: translateY(40px);
+    }
+    .card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 12px 35px var(--shadow);
+    }
+    .card img {
+        width: 100%;
+        height: 200px;
+        object-fit: cover;
+        transition: 0.4s;
+    }
+    .card img:hover { transform: scale(1.05); filter: brightness(1.1); }
+    .card-content { padding: 20px; }
+    .card-content h3 { margin: 0 0 10px; font-size: 20px; font-weight: 600; }
+    .card-content p { margin: 0; font-size: 14px; color: var(--subtext); line-height: 1.5; }
+    .buy-btn {
+        margin-top: 12px;
+        padding: 8px 16px;
+        background: var(--accent);
+        color: #071013;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        font-weight: 600;
+        transition: 0.3s;
+    }
+    .buy-btn:hover { background: #c28a44; }
+
+    footer {
+        background: var(--header-bg);
+        color: var(--header-text);
+        text-align: center;
+        padding: 35px 20px;
+        font-size: 14px;
+    }
+    footer a { color: var(--header-text); text-decoration: none; font-weight: 600; }
+    footer .social a { margin: 0 8px; display: inline-block; }
+    footer .social img { width: 24px; vertical-align: middle; }
+</style>
+</head>
+<body>
+
+<header>
+    <h1>Abdillah_Rajawali Woodworks</h1>
+    <nav>
+        <a href="#">Home</a>
+        <a href="#products">Produk</a>
+        <a href="#contact">Kontak</a>
+    </nav>
+    <button class="toggle-btn" id="toggleDark">Dark Mode</button>
+</header>
+
+<section class="hero">
+    <div class="slides">
+        <div class="slide" style="background-image:url('https://picsum.photos/1400/750?random=11');">
+            <div class="slide-content">
+                <h2>Kerajinan Kayu Handmade Premium</h2>
+                <a href="#products" class="hero-btn">Lihat Produk</a>
+            </div>
+        </div>
+        <div class="slide" style="background-image:url('https://picsum.photos/1400/750?random=12');">
+            <div class="slide-content">
+                <h2>Elegan • Estetik • Berkualitas Tinggi</h2>
+                <a href="#products" class="hero-btn">Lihat Produk</a>
+            </div>
+        </div>
+        <div class="slide" style="background-image:url('https://picsum.photos/1400/750?random=13');">
+            <div class="slide-content">
+                <h2>Sentuhan Premium untuk Setiap Ruangan</h2>
+                <a href="#products" class="hero-btn">Lihat Produk</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="container" id="products">
+    <h2 class="section-title">Produk Kerajinan Kayu</h2>
+
+    <div class="filter-btns">
+        <button class="filter-btn active" data-filter="all">Semua</button>
+        <button class="filter-btn" data-filter="meja">Meja</button>
+        <button class="filter-btn" data-filter="lampu">Lampu</button>
+        <button class="filter-btn" data-filter="rak">Rak</button>
+        <button class="filter-btn" data-filter="dekorasi">Dekorasi</button>
+    </div>
+
+    <div class="card-grid">
+        <!-- 12 CARD KERAJINAN KAYU -->
+        <div class="card" data-category="meja">
+            <img src="https://picsum.photos/400/300?random=1" alt="">
+            <div class="card-content">
+                <h3>Meja Kayu Solid</h3>
+                <p>Meja premium dari kayu solid berkualitas tinggi dengan finishing alami.</p>
+                <button class="buy-btn" data-title="Meja Kayu Solid">Beli Sekarang</button>
+            </div>
+        </div>
+        <div class="card" data-category="rak">
+            <img src="https://picsum.photos/400/300?random=2" alt="">
+            <div class="card-content">
+                <h3>Rak Display Minimalis</h3>
+                <p>Rak handmade bergaya minimalis untuk dekorasi ruangan modern.</p>
+                <button class="buy-btn" data-title="Rak Display Minimalis">Beli Sekarang</button>
+            </div>
+        </div>
+        <div class="card" data-category="lampu">
+            <img src="https://picsum.photos/400/300?random=3" alt="">
+            <div class="card-content">
+                <h3>Jam Dinding Kayu</h3>
+                <p>Jam dinding rustic dengan detail ukiran yang halus dan presisi.</p>
+                <button class="buy-btn" data-title="Jam Dinding Kayu">Beli Sekarang</button>
+            </div>
+        </div>
+        <div class="card" data-category="dekorasi">
+            <img src="https://picsum.photos/400/300?random=4" alt="">
+            <div class="card-content">
+                <h3>Vas Dekorasi Kayu</h3>
+                <p>Vas dekoratif handmade dengan pola serat kayu yang menawan.</p>
+                <button class="buy-btn" data-title="Vas Dekorasi Kayu">Beli Sekarang</button>
+            </div>
+        </div>
+        <div class="card" data-category="lampu">
+            <img src="https://picsum.photos/400/300?random=5" alt="">
+            <div class="card-content">
+                <h3>Lampu Meja Kayu</h3>
+                <p>Lampu meja estetik dengan sentuhan hangat dari material kayu alami.</p>
+                <button class="buy-btn" data-title="Lampu Meja Kayu">Beli Sekarang</button>
+            </div>
+        </div>
+        <div class="card" data-category="dekorasi">
+            <img src="https://picsum.photos/400/300?random=6" alt="">
+            <div class="card-content">
+                <h3>Ukiran Hias Dinding</h3>
+                <p>Ukiran seni kayu bernuansa tradisional yang cocok untuk dekor dinding.</p>
+                <button class="buy-btn" data-title="Ukiran Hias Dinding">Beli Sekarang</button>
+            </div>
+        </div>
+        <div class="card" data-category="meja">
+            <img src="https://picsum.photos/400/300?random=7" alt="">
+            <div class="card-content">
+                <h3>Meja Kopi Kayu</h3>
+                <p>Meja kopi bergaya rustic dari kayu solid, cocok untuk ruang tamu.</p>
+                <button class="buy-btn" data-title="Meja Kopi Kayu">Beli Sekarang</button>
+            </div>
+        </div>
+        <div class="card" data-category="rak">
+            <img src="https://picsum.photos/400/300?random=8" alt="">
+            <div class="card-content">
+                <h3>Rak Buku Kayu</h3>
+                <p>Rak buku elegan dari kayu alami untuk dekorasi rumah modern.</p>
+                <button class="buy-btn" data-title="Rak Buku Kayu">Beli Sekarang</button>
+            </div>
+        </div>
+        <div class="card" data-category="lampu">
+            <img src="https://picsum.photos/400/300?random=9" alt="">
+            <div class="card-content">
+                <h3>Lampu Gantung Kayu</h3>
+                <p>Lampu gantung estetik dengan sentuhan kayu alami dan elegan.</p>
+                <button class="buy-btn" data-title="Lampu Gantung Kayu">Beli Sekarang</button>
+            </div>
+        </div>
+        <div class="card" data-category="dekorasi">
+            <img src="https://picsum.photos/400/300?random=10" alt="">
+            <div class="card-content">
+                <h3>Miniatur Kayu Hias</h3>
+                <p>Miniatur kayu handmade sebagai dekorasi meja atau rak.</p>
+                <button class="buy-btn" data-title="Miniatur Kayu Hias">Beli Sekarang</button>
+            </div>
+        </div>
+        <div class="card" data-category="meja">
+            <img src="https://picsum.photos/400/300?random=11" alt="">
+            <div class="card-content">
+                <h3>Meja Belajar Kayu</h3>
+                <p>Meja belajar ergonomis dengan finishing kayu premium.</p>
+                <button class="buy-btn" data-title="Meja Belajar Kayu">Beli Sekarang</button>
+            </div>
+        </div>
+        <div class="card" data-category="rak">
+            <img src="https://picsum.photos/400/300?random=12" alt="">
+            <div class="card-content">
+                <h3>Rak Dinding Kayu</h3>
+                <p>Rak kayu minimalis untuk dekorasi dinding dan penyimpanan barang.</p>
+                <button class="buy-btn" data-title="Rak Dinding Kayu">Beli Sekarang</button>
+            </div>
+        </div>
+        <!-- Tambahkan di dalam div.card-grid setelah 12 card terakhir -->
+<div class="card" data-category="dekorasi">
+    <img src="https://picsum.photos/400/300?random=13" alt="">
+    <div class="card-content">
+        <h3>Tempat Lilin Kayu</h3>
+        <p>Tempat lilin dekoratif handmade dengan finishing kayu alami yang menawan.</p>
+        <button class="buy-btn" data-title="Tempat Lilin Kayu">Beli Sekarang</button>
+    </div>
+</div>
+<div class="card" data-category="lampu">
+    <img src="https://picsum.photos/400/300?random=14" alt="">
+    <div class="card-content">
+        <h3>Lampu Hias Dinding</h3>
+        <p>Lampu hias dinding kayu premium dengan sentuhan estetik modern.</p>
+        <button class="buy-btn" data-title="Lampu Hias Dinding">Beli Sekarang</button>
+    </div>
+</div>
+<div class="card" data-category="meja">
+    <img src="https://picsum.photos/400/300?random=15" alt="">
+    <div class="card-content">
+        <h3>Meja Konsol Kayu</h3>
+        <p>Meja konsol elegan untuk ruang tamu atau lorong dengan detail kayu indah.</p>
+        <button class="buy-btn" data-title="Meja Konsol Kayu">Beli Sekarang</button>
+    </div>
+</div>
+
+    </div>
+</section>
+
+<footer id="contact">
+    <p>&copy; 2025 Rajawali Woodworks — Kerajinan Kayu Handmade</p>
+    <p>Email: <a href="mailto:@rajawaliwood.com">@Abdillah_rajawaliwood.com</a> | WA: <a href="https://wa.me/6281234567890" target="_blank">+62 812-3456-7890</a></p>
+    <div class="social">
+        <a href="#"><img src="https://img.icons8.com/ios-glyphs/30/ffffff/facebook-new.png"/></a>
+        <a href="#"><img src="https://img.icons8.com/ios-glyphs/30/ffffff/instagram-new.png"/></a>
+    </div>
+</footer>
+
+<script>
+    // DARK MODE TOGGLE
+    const toggleBtn = document.getElementById("toggleDark");
+    toggleBtn.addEventListener("click", () => {
+        document.body.classList.toggle("dark");
+        toggleBtn.textContent = document.body.classList.contains("dark") ? "Light Mode" : "Dark Mode";
+    });
+
+    // HERO SLIDER
+    const slides = document.querySelector('.slides');
+    let index = 0;
+    setInterval(() => {
+        index = (index + 1) % 3;
+        slides.style.transform = `translateX(-${index*100}%)`;
+    }, 5000);
+
+    // CARD ANIMATION
+    const cards = document.querySelectorAll(".card");
+    const revealCards = () => {
+        const trigger = window.innerHeight * 0.85;
+        cards.forEach(card => {
+            const top = card.getBoundingClientRect().top;
+            if(top < trigger) { card.style.opacity = "1"; card.style.transform = "translateY(0)"; }
+        });
+    };
+    window.addEventListener("scroll", revealCards);
+    revealCards();
+
+    // FILTER
+    const filterBtns = document.querySelectorAll(".filter-btn");
+    filterBtns.forEach(btn => {
+        btn.addEventListener("click", () => {
+            filterBtns.forEach(b => b.classList.remove("active"));
+            btn.classList.add("active");
+            const category = btn.dataset.filter;
+            cards.forEach(card => {
+                card.style.display = (category==="all" || card.dataset.category===category) ? "block" : "none";
+            });
+        });
+    });
+
+    // BUY BUTTON WA
+    document.querySelectorAll(".buy-btn").forEach(btn => {
+        btn.addEventListener("click", () => {
+            const product = btn.dataset.title;
+            const waNumber = "6281234567890";
+            const msg = encodeURIComponent(`Halo Rajawali Woodworks, saya tertarik membeli: *${product}*`);
+            window.open(`https://wa.me/${waNumber}?text=${msg}`, '_blank');
+        });
+    });
+</script>
+
+</body>
+</html>
